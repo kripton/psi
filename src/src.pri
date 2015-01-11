@@ -201,11 +201,13 @@ HEADERS += \
 	$$PWD/bookmarkmanagedlg.h \
 	$$PWD/vcardphotodlg.h \
 	$$PWD/psicli.h \
-	$$PWD/coloropt.h
+	$$PWD/coloropt.h \
+    $$PWD/realtimetext.h
 
 
 HEADERS += tabcompletion.h
-SOURCES += tabcompletion.cpp
+SOURCES += tabcompletion.cpp \
+    $$PWD/realtimetext.cpp
 
 HEADERS += alertmanager.h
 SOURCES += alertmanager.cpp
