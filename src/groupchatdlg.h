@@ -110,6 +110,8 @@ private slots:
 	void scrollUp();
 	void scrollDown();
 	void mle_returnPressed();
+	void mle_textChanged();
+	void mle_cursorPositionChanged();
 	void openTopic();
 	void setTopic(const QString &);
 	void openFind();

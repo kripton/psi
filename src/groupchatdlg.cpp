@@ -661,7 +661,7 @@ GCMainDlg::GCMainDlg(PsiAccount *pa, const Jid &j, TabManager *tabManager)
 	d->act_send = new QAction(this);
 	addAction(d->act_send);
 	connect(d->act_send,SIGNAL(triggered()), SLOT(mle_returnPressed()));
- 	ui_.pb_send->setIcon(IconsetFactory::icon("psi/action_button_send").icon());
+	ui_.pb_send->setIcon(IconsetFactory::icon("psi/action_button_send").icon());
 	connect(ui_.pb_send, SIGNAL(clicked()), SLOT(mle_returnPressed()));
 	d->act_close = new QAction(this);
 	addAction(d->act_close);
@@ -672,6 +672,9 @@ GCMainDlg::GCMainDlg(PsiAccount *pa, const Jid &j, TabManager *tabManager)
 	d->act_scrolldown = new QAction(this);
 	addAction(d->act_scrolldown);
 	connect(d->act_scrolldown,SIGNAL(triggered()), SLOT(scrollDown()));
+
+	connect(d->mle(), SIGNAL(textChanged()), this, SLOT(mle_textChanged()));
+	connect(d->mle(), SIGNAL(cursorPositionChanged()), this, SLOT(mle_cursorPositionChanged()));
 
 	ui_.mini_prompt->hide();
 	connect(ui_.mle, SIGNAL(textEditCreated(QTextEdit*)), SLOT(chatEditCreated()));
@@ -917,6 +920,16 @@ void GCMainDlg::mle_returnPressed()
 	d->histAt = 0;
 	d->hist.prepend(str);
 	ui_.mle->chatEdit()->setText("");
+}
+
+void GCMainDlg::mle_textChanged()
+{
+	qDebug() << "MLE TEXT CHANGED. CURRENT CONTENT:" << d->mle()->toPlainText();
+}
+
+void GCMainDlg::mle_cursorPositionChanged()
+{
+	qDebug() << "MLE cursorPos CHANGED. CURRENT POS:" << d->mle()->cursorRect() << d->mle()->textCursor().position() << d->mle()->textCursor().positionInBlock();
 }
 
 /*void GCMainDlg::le_upPressed()
@@ -1760,7 +1773,7 @@ GCFindDlg::GCFindDlg(const QString& str, QWidget* parent)
 	: QDialog(parent)
 {
 	setAttribute(Qt::WA_DeleteOnClose);
-        setWindowFlags(Qt::Dialog | Qt::WindowTitleHint | Qt::WindowCloseButtonHint | Qt::CustomizeWindowHint);
+	setWindowFlags(Qt::Dialog | Qt::WindowTitleHint | Qt::WindowCloseButtonHint | Qt::CustomizeWindowHint);
 	setWindowTitle(tr("Find"));
 	QVBoxLayout *vb = new QVBoxLayout(this);
 	vb->setMargin(4);
